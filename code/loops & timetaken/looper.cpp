@@ -20,7 +20,7 @@ int main() {
   }
 
   auto final = duration_cast<microseconds>(high_resolution_clock::now() - start);
-  cout << "Time taken by while loop: " << final << '\n';
+  microseconds whiletime = final;
 
   start = high_resolution_clock::now();
 
@@ -31,7 +31,7 @@ int main() {
   }
 
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
-  cout << "Time taken by for loop: " << final << '\n';
+  microseconds fortime = final;
 
   start = high_resolution_clock::now();
 
@@ -41,14 +41,20 @@ int main() {
     case 0:
     break;
     case 1:
-    cout << "JMP(switch): " << i;
+    cout << "JMP: " << i;
     clearscrn();
     i++
     longjmp(loopstrt, 1);
   }
 
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
-  cout << "Time taken by for jmp: " << final << '\n';
+  microseconds jmptime = final;
+
+  cout << "Final times";
+  cout << "While: " << whiletime;
+  cout << "For: " << fortime;
+  cout << "JMP: " << jmptime;
+  return 0;
 }
 
 void clearscrn() {
