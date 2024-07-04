@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     avathr = 1;
   }
 
-  // Calculate the number of lines in the file
+  // Get the number of lines in the file
   ifstream file(filepath);
   int numlines = 0;
   string line;
