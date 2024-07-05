@@ -70,7 +70,6 @@ int main(int argc, char *argv[]) {
     tasks.push_back(task);
   }
 
-  // Create threads and execute search tasks
   vector<thread> threads;
   for (auto& task : tasks) {
     threads.emplace_back(searchInFile, task);

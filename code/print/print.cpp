@@ -6,13 +6,13 @@ int main() {
 }
 
 void print(const char *msg) {
-  int len = 0;
+  unsigned int len = 0;
 
   while (msg[len] != '\0') {
     len++;
   }
 
-  #ifdef WIN_32
+  #if defined(WIN)
   __asm__ (
     "mov eax, 0x04000004 \n"
     "lea edx, [msg] \n"
@@ -21,7 +21,7 @@ void print(const char *msg) {
     : "g" (len), "g" (msg)
     : "%eax", "%edx"
   );
-  #else
+  #elif defined(UNIX)
   __asm__ (
     "movl $1, %%eax \n"
     "movl $1, %%ebx \n"
@@ -32,5 +32,7 @@ void print(const char *msg) {
     : "g" (len), "g" (msg)
     : "%eax", "%ebx", "%ecx", "%edx"
   );
+  #else
+  #error "Unsupported platform"
   #endif
 }
