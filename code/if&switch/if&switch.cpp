@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     c = 0;
   }
 
-  // Faster & fancier
+  // Fancier
   switch ((bool)(a<b)) {
     case 1:
     c = a + b;
@@ -19,6 +19,9 @@ int main(int argc, char *argv[]) {
     c = 0;
     break;
   }
+
+  // What
+  a<b ? c=a+b : c=0;
 
   return 0;
 }
