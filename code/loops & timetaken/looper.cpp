@@ -12,7 +12,7 @@ void clearscrn();
 int main() {
   auto start = high_resolution_clock::now();
 
-  int i=0;
+  int i = 0;
   while (i < count_to) {
     cout << "WHILE: " << i;
     clearscrn();
@@ -24,7 +24,7 @@ int main() {
 
   start = high_resolution_clock::now();
 
-  i=0;
+  i = 0;
   for (; i < count_to; i++) {
     cout << "FOR: " << i;
     clearscrn();
@@ -35,7 +35,7 @@ int main() {
 
   start = high_resolution_clock::now();
 
-  i=0;
+  i = 0;
   jmp_buf loopstrt;
   switch ((bool)(i<count_to)) {
     case 0:
@@ -50,10 +50,28 @@ int main() {
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
   microseconds jmptime = final;
 
-  cout << "Final times";
+  start = high_resolution_clock::now();
+  i = 0;
+gotoloop:
+
+  switch ((bool)(i<count_to)) {
+    case 0:
+    clearscrn();
+    goto finalize;
+    break;
+    case 1:
+    cout << "goto: " << i;
+    clearscrn();
+    i++
+    goto gotoloop;
+  }
+
+finalize:
+  cout << "Final timestamps";
   cout << "While: " << whiletime;
   cout << "For: " << fortime;
   cout << "JMP: " << jmptime;
+  cout << "goto: " << gototime;
   return 0;
 }
 

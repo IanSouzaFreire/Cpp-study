@@ -12,6 +12,6 @@ int main(int argc, char *argv[]) {
     cout << " " << argv[i];
   }
 
-  cout << ";\nresult" << result << endl;  
+  cout << ";\nresult: " << result << endl;  
   return 0;
 }

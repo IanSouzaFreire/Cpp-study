@@ -6,21 +6,7 @@
 
 using namespace std;
 
-string readFileContents(const string &filePath) {
-  ifstream file(filePath);
-  if (!file.is_open()) {
-    throw runtime_error("Failed to open file: " + filePath);
-  }
-
-  string content;
-  file.seekg(0, ios::end);
-  content.resize(file.tellg());
-  file.seekg(0, ios::beg);
-  file.read(&content[0], content.size());
-  file.close();
-
-  return content;
-}
+string readFileContents(const string &filePath);
 
 int main() {
   SOCKET wsocket;
@@ -92,4 +78,21 @@ int main() {
 
   closesocket(new_wsocket);
   return 0;
+}
+
+string readFileContents(const string &filePath) {
+  ifstream file(filePath);
+
+  if (!file.is_open()) {
+    throw runtime_error("Failed to open file: " + filePath);
+  }
+
+  string content;
+  file.seekg(0, ios::end);
+  content.resize(file.tellg());
+  file.seekg(0, ios::beg);
+  file.read(&content[0], content.size());
+  file.close();
+
+  return content;
 }

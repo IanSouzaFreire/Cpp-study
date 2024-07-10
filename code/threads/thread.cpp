@@ -16,23 +16,7 @@ struct SearchTask {
   int endpos;
 };
 
-void searchInFile(SearchTask task) {
-  int foundmatches = 0;
-  ifstream file(task.filepath);
-  file.seekg(task.startpos);
-  string line;
-  for (int i = task.startpos; i < task.endpos; ++i) {
-    getline(file, line);
-    size_t found = line.find(task.tofind);
-    if (found!= string::npos) {
-      ++foundmatches;
-      if (task.stopatfirst) {
-        break;
-      }
-    }
-  }
-  cout << "Thread found " << foundmatches << " matches in file " << task.filepath << endl;
-}
+void searchInFile(SearchTask task);
 
 int main(int argc, char *argv[]) {
   if (argc!= 5) {
@@ -60,6 +44,7 @@ int main(int argc, char *argv[]) {
   // Create search tasks and divide the file into chunks for each thread
   vector<SearchTask> tasks;
   int chunksize = numlines / avathr;
+
   for (int i = 0; i < avathr; ++i) {
     SearchTask task;
     task.filepath = filepath;
@@ -71,6 +56,7 @@ int main(int argc, char *argv[]) {
   }
 
   vector<thread> threads;
+  
   for (auto& task : tasks) {
     threads.emplace_back(searchInFile, task);
   }
@@ -81,4 +67,26 @@ int main(int argc, char *argv[]) {
   }
 
   return 0;
+}
+
+void searchInFile(SearchTask task) {
+  int foundmatches = 0;
+  ifstream file(task.filepath);
+  file.seekg(task.startpos);
+  string line;
+
+  for (int i = task.startpos; i < task.endpos; ++i) {
+    getline(file, line);
+    size_t found = line.find(task.tofind);
+
+    if (found!= string::npos) {
+      ++foundmatches;
+
+      if (task.stopatfirst) {
+        break;
+      }
+    }
+  }
+  
+  cout << "Thread found " << foundmatches << " matches in file " << task.filepath << endl;
 }
