@@ -1,15 +1,20 @@
+#include <algorithm>
 #include <iostream>
+#include <iterator>
 #include <csetjmp>
 #include <chrono>
+#include <vector>
 
 using namespace std::chrono;
 using namespace std;
 
-const int count_to = 10000;
+const int count_to = 1000;
 
+int recurse(int start, int finish);
 void clearscrn();
 
 int main() {
+  // While loop
   auto start = high_resolution_clock::now();
 
   int i = 0;
@@ -22,17 +27,18 @@ int main() {
   auto final = duration_cast<microseconds>(high_resolution_clock::now() - start);
   microseconds whiletime = final;
 
+  // For loop
   start = high_resolution_clock::now();
 
-  i = 0;
-  for (; i < count_to; i++) {
-    cout << "FOR: " << i;
+  for (int j = 0; j < count_to; j++) {
+    cout << "FOR: " << j;
     clearscrn();
   }
 
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
   microseconds fortime = final;
 
+  // Jmp statement
   start = high_resolution_clock::now();
 
   i = 0;
@@ -43,17 +49,26 @@ int main() {
     case 1:
     cout << "JMP: " << i;
     clearscrn();
-    i++
+    i++;
     longjmp(loopstrt, 1);
   }
 
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
   microseconds jmptime = final;
 
+  // Recursion
+  start = high_resolution_clock::now();
+
+  i = 0;
+  recurse(i, count_to);
+
+  final = duration_cast<microseconds>(high_resolution_clock::now() - start);
+  microseconds recursiontime = final;
+
+  // Goto
   start = high_resolution_clock::now();
   i = 0;
 gotoloop:
-
   switch ((bool)(i<count_to)) {
     case 0:
     clearscrn();
@@ -62,23 +77,38 @@ gotoloop:
     case 1:
     cout << "goto: " << i;
     clearscrn();
-    i++
+    i++;
     goto gotoloop;
   }
 
 finalize:
-  cout << "Final timestamps";
-  cout << "While: " << whiletime;
-  cout << "For: " << fortime;
-  cout << "JMP: " << jmptime;
-  cout << "goto: " << gototime;
+  final = duration_cast<microseconds>(high_resolution_clock::now() - start);
+  microseconds gototime = final;
+
+  cout << "Final timestamps \\/" << '\n';
+  cout << "While: " << whiletime.count() << '\n';
+  cout << "For: " << fortime.count() << '\n';
+  cout << "JMP: " << jmptime.count() << '\n';
+  cout << "recursion: " << recursiontime.count() << '\n';
+  cout << "goto: " << gototime.count() << '\n';
   return 0;
+}
+
+int recurse(int start, const int finish) {
+  if (start+1 == finish) { return finish; }
+  else {
+    cout << "recurse: " << start;
+    clearscrn();
+    return recurse(start+1, finish);
+  }
+  
+  return (int)NULL; // In case of unexpected behaviour;
 }
 
 void clearscrn() {
   #ifdef _WIN32
   system("cls");
-  #else
+  #else // Unix
   system("clear");
   #endif
 }
