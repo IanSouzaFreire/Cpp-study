@@ -85,6 +85,8 @@ finalize:
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
   microseconds gototime = final;
 
+  clearscrn();
+
   cout << "Final timestamps \\/" << '\n';
   cout << "While: " << whiletime.count() << '\n';
   cout << "For: " << fortime.count() << '\n';

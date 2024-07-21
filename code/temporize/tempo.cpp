@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     givenValues.push_back((const int&)argv[i]);
   }
   
-  const int &&buffer = givenValues.size();
+  const int&& buffer = givenValues.size();
   vector<bool> trueValues(buffer, false);
   int addWith = 0;
   auto point_TV = givenValues.begin();
