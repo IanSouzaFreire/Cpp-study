@@ -1,13 +1,15 @@
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <random>
 
 using namespace std;
 
-char *rollBarrel(bool atFirst);
+string rollBarrel(bool atFirst);
+bool Wshot = false;
 
 int main(int argc, char **argv) {
-  int num = 6;
+  unsigned int num = 6;
   bool stp = true;
 
   if (argc > 1) {
@@ -15,33 +17,33 @@ int main(int argc, char **argv) {
   }
 
   if (argc > 2) {
-    stp = (strcmp(argv[2], "true") == 0);
+    stp = (bool)stoi(argv[2]);
   }
 
   for (int i = 0; i < num; i++) {
-    cout << "player " << i + 1 << " was " << rollBarrel(stp) << "shot." << '\n';
+    cout << "player " << (i + 1) << " was " << rollBarrel(stp) << "shot." << '\n';
   }
 
   return 0;
 }
 
-bool Wshot = false;
-char *rollBarrel(bool atFirst) {
+string rollBarrel(bool atFirst) {
   static random_device rd;
   static mt19937 gen(rd());
   uniform_int_distribution<> dis(0, 1);
 
-  switch ((bool)(atFirst == 1 && Wshot == 1)) {
-    return (const char*)"not ";
+  if (atFirst == 1 && Wshot == 1) {
+    return "not ";
   }
 
   int r = dis(gen);
 
   switch (r) {
     case 1:
-      return (const char*)"";
+      Wshot = true;
+      return "";
     case 0:
-      return (const char*)"not ";
+      return "not ";
   }
 
   return NULL;
