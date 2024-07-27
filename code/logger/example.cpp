@@ -4,10 +4,10 @@
 #include <fstream>
 
 int main() {
-    Log(LogLevel::Info) << "some information";
-    Log(LogLevel::Debug) << "some information";
-    Log(LogLevel::Warn) << "some information";
-    Log(LogLevel::Error) << "some information";
-    Log(LogLevel::Info) << "some information";
+    Log(LogLevel::Debug) << "started.";
+    Log(LogLevel::Info) << "running.";
+    Log(LogLevel::Warn) << "I'm having a headache.";
+    Log(LogLevel::Unknown) << "IDK.";
+    Log(LogLevel::Error) << "my IDE is malconfigured.";
     return EXIT_SUCCSESS;
 }
