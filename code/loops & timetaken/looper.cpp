@@ -3,12 +3,15 @@
 #include <iterator>
 #include <csetjmp>
 #include <chrono>
+#include <thread>
 #include <vector>
+
+#define sleepTime chrono::milliseconds(5)
 
 using namespace std::chrono;
 using namespace std;
 
-const int count_to = 1000;
+const int count_to = 100;
 
 int recurse(int start, int finish);
 void clearscrn();
@@ -19,7 +22,8 @@ int main() {
 
   int i = 0;
   while (i < count_to) {
-    cout << "WHILE: " << i;
+    std::cout << "WHILE: " << i << '\n';
+    this_thread::sleep_for(sleepTime);
     clearscrn();
     i++;
   }
@@ -31,7 +35,8 @@ int main() {
   start = high_resolution_clock::now();
 
   for (int j = 0; j < count_to; j++) {
-    cout << "FOR: " << j;
+    std::cout << "FOR: " << j << '\n';
+    this_thread::sleep_for(sleepTime);
     clearscrn();
   }
 
@@ -43,14 +48,13 @@ int main() {
 
   i = 0;
   jmp_buf loopstrt;
-  switch ((bool)(i<count_to)) {
-    case 0:
-    break;
-    case 1:
-    cout << "JMP: " << i;
+  int val = setjmp(loopstrt); // Save the environment
+  if (i < count_to) {
+    std::cout << "JMP: " << i << '\n';
+    this_thread::sleep_for(sleepTime);
     clearscrn();
     i++;
-    longjmp(loopstrt, 1);
+    longjmp(loopstrt, 1); // Restore the environment
   }
 
   final = duration_cast<microseconds>(high_resolution_clock::now() - start);
@@ -69,16 +73,15 @@ int main() {
   start = high_resolution_clock::now();
   i = 0;
 gotoloop:
-  switch ((bool)(i<count_to)) {
-    case 0:
-    clearscrn();
-    goto finalize;
-    break;
-    case 1:
-    cout << "goto: " << i;
+  if (i < count_to) {
+    std::cout << "goto: " << i << '\n';
+    this_thread::sleep_for(sleepTime);
     clearscrn();
     i++;
     goto gotoloop;
+  } else {
+    clearscrn();
+    goto finalize;
   }
 
 finalize:
@@ -87,24 +90,27 @@ finalize:
 
   clearscrn();
 
-  cout << "Final timestamps \\/" << '\n';
-  cout << "While: " << whiletime.count() << '\n';
-  cout << "For: " << fortime.count() << '\n';
-  cout << "JMP: " << jmptime.count() << '\n';
-  cout << "recursion: " << recursiontime.count() << '\n';
-  cout << "goto: " << gototime.count() << '\n';
+  std::cout << "Final timestamps(milliseconds) \\/" << '\n'
+            << "While: "   << whiletime.count()     << '\n'
+            << "For: "     << fortime.count()       << '\n'
+            << "JMP: "     << jmptime.count()       << '\n'
+            << "recurse: " << recursiontime.count() << '\n'
+            << "goto: "    << gototime.count()      << '\n'
+  ;
+
+  this_thread::sleep_for(chrono::seconds(5));
   return 0;
 }
 
 int recurse(int start, const int finish) {
-  if (start+1 == finish) { return finish; }
-  else {
-    cout << "recurse: " << start;
+  if (start+1 == finish) {
+    return finish;
+  } else {
+    cout << "recurse: " << start << '\n';
+    this_thread::sleep_for(sleepTime);
     clearscrn();
     return recurse(start+1, finish);
   }
-  
-  return (int)NULL; // In case of unexpected behaviour;
 }
 
 void clearscrn() {
