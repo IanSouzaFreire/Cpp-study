@@ -90,7 +90,7 @@ finalize:
 
   clearscrn();
 
-  std::cout << "Final timestamps(milliseconds) \\/" << '\n'
+  std::cout << "Final timestamps(microseconds) \\/" << '\n'
             << "While: "   << whiletime.count()     << '\n'
             << "For: "     << fortime.count()       << '\n'
             << "JMP: "     << jmptime.count()       << '\n'
