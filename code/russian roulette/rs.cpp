@@ -6,7 +6,6 @@
 using namespace std;
 
 string rollBarrel(bool atFirst);
-bool Wshot = false;
 
 int main(int argc, char **argv) {
   unsigned int num = 6;
@@ -20,19 +19,22 @@ int main(int argc, char **argv) {
     stp = (bool)stoi(argv[2]);
   }
 
-  for (int i = 0; i < num; i++) {
+  for (unsigned int i = 0; i < num; i++) {
     cout << "player " << (i + 1) << " was " << rollBarrel(stp) << "shot." << '\n';
   }
-
+  
   return 0;
 }
 
 string rollBarrel(bool atFirst) {
+  static bool *Wshot = new bool;
   static random_device rd;
   static mt19937 gen(rd());
   uniform_int_distribution<> dis(0, 1);
 
-  if (atFirst == 1 && Wshot == 1) {
+  if (Wshot == nullptr) { *Wshot = 0; }
+
+  if (atFirst == 1 && *Wshot == 1) {
     return "not ";
   }
 
@@ -40,11 +42,11 @@ string rollBarrel(bool atFirst) {
 
   switch (r) {
     case 1:
-      Wshot = true;
+      *Wshot = true;
       return "";
     case 0:
       return "not ";
   }
-
-  return NULL;
+  
+  return "";
 }
