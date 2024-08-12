@@ -1,14 +1,14 @@
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-#pragma comment(lib, "ws2_32")
-#include <WinSock2.h>
+#include <winsock2.h>
+#include <windows.h>
+#include <iostream>
 #include <fstream>
 #include <string>
 
-using namespace std;
+std::string readFileContents(const std::string &filePath);
 
-string readFileContents(const string &filePath);
+int main(int, char** argv) {
+  using namespace std;
 
-int main() {
   SOCKET wsocket;
   SOCKET new_wsocket;
   WSADATA wsaData;
@@ -16,7 +16,9 @@ int main() {
   int server_len;
   int BUFER_SIZE = 30720;
 
-  if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+  cout << "open \"http://localhost:8080\" in your browser!";
+
+  if (WSAStartup(MAKEWORD(2, 2), &wsaData) != NO_ERROR) {
     return 1; // Could not initialize
   }
 
@@ -29,9 +31,9 @@ int main() {
   server.sin_family = AF_INET;
   server.sin_addr.s_addr = inet_addr("127.0.0.1");
   server.sin_port = htons(8080);
-  server_len = sizeof(server)
+  server_len = sizeof(server);
 
-  if (bind(wsocket, (SOCKADD *)&server, server_len) != 0) {
+  if (bind(wsocket, (SOCKADDR *)&server, server_len) != 0) {
     return 1; // Could not bind socket
   }
 
@@ -48,7 +50,7 @@ int main() {
     }
 
     char buff[30720] = { 0 };
-    bytes = recv(new_wsocket, buff BUFER_SIZE, 0);
+    auto bytes = recv(new_wsocket, buff, BUFER_SIZE, 0);
 
     if (bytes < 0) {
       return 1; // Could not read client request
@@ -80,17 +82,17 @@ int main() {
   return 0;
 }
 
-string readFileContents(const string &filePath) {
-  ifstream file(filePath);
+std::string readFileContents(const std::string &filePath) {
+  std::ifstream file(filePath);
 
   if (!file.is_open()) {
-    throw runtime_error("Failed to open file: " + filePath);
+    throw std::runtime_error("Failed to open file: " + filePath);
   }
 
-  string content;
-  file.seekg(0, ios::end);
+  std::string content;
+  file.seekg(0, std::ios::end);
   content.resize(file.tellg());
-  file.seekg(0, ios::beg);
+  file.seekg(0, std::ios::beg);
   file.read(&content[0], content.size());
   file.close();
 
