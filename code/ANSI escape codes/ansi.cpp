@@ -34,13 +34,13 @@ std::string bright_cyan    = "96";
 std::string bright_white   = "97";
 }
 
-std::string set_txt(const std::string& fg="39", const std::string& bg="39", const std::vector<std::string>& styles={"0"})
-{
+std::string set_txt(const std::string& fg="39", const std::string& bg="39", const std::vector<std::string>& styles={"0"}) {
   std::string R = "\x1b[";
   
-  if (&styles != nullptr)
-  for (const auto& style : styles) {
-    R += style + ";";
+  if (&styles != nullptr) {
+    for (const auto& style : styles) {
+      R += style + ";";
+    }
   }
 
   R += std::to_string(stoi(bg) + 10) + ";" + fg + "m";
@@ -50,16 +50,17 @@ std::string set_txt(const std::string& fg="39", const std::string& bg="39", cons
 
 }
 
-int main()
-{
+int main(int, char**) {
+  namespace col = text::color;
+
   std::cout
-  << text::set_txt(text::color::bright_green)  << "b"
-  << text::set_txt(text::color::bright_yellow) << "r"
-  << text::set_txt(text::color::yellow)        << "a"
-  << text::set_txt(text::color::blue)          << "s"
-  << text::set_txt(text::color::yellow)        << "i"
-  << text::set_txt(text::color::bright_yellow) << "l"
-  << text::set_txt(text::color::bright_green)  << "!"
+  << text::set_txt(col::bright_green)  << "b"
+  << text::set_txt(col::bright_yellow) << "r"
+  << text::set_txt(col::yellow)        << "a"
+  << text::set_txt(col::blue)          << "s"
+  << text::set_txt(col::yellow)        << "i"
+  << text::set_txt(col::bright_yellow) << "l"
+  << text::set_txt(col::bright_green)  << "!"
   << '\n'; // "brasil!\n"
 
   return 0;
