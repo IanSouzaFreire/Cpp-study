@@ -1,5 +1,5 @@
 #include <iostream>
-#include "geometry.hpp"
+#include "lemath.hpp"
 
 int main(int, char**) {
 	mmath::rect2D<long double> gold(1, 1.618);
