@@ -1,7 +1,7 @@
 #include <iostream>
 
 template <class T, int _size, T defaul>
-struct Queque {
+struct Queue {
   int to_add = 0;
   int to_remove = 0;
   T stack[_size];
@@ -11,7 +11,7 @@ public:
       stack[to_add] = given;
       to_add = (to_add + 1) % _size;
     } else {
-      error("Queue is full. Cannot add more elements.\n");
+      std::overflow_error("Queue is full. Cannot add more elements.\n");
     }
   }
   
@@ -22,7 +22,7 @@ public:
       to_remove = (to_remove + 1) % _size;
       return temp;
     } else {
-      error("Queue is empty. Cannot remove elements.\n");
+      std::underflow_error("Queue is empty. Cannot remove elements.\n");
       return defaul;
     }
   }
@@ -38,10 +38,6 @@ public:
   bool isFull() {
     return (to_add + 1) % _size == to_remove;
   }
-private:
-  inline void error(const char* s) {
-    throw std::runtime_error(s);
-  }
 };
 
 template <class T, int _size, T defaul>
@@ -54,7 +50,7 @@ public:
       stack[current] = given;
       current += 1;
     } else {
-      error("Stack is full. Cannot add more elements.\n");
+      std::overflow_error("Stack is full. Cannot add more elements.\n");
     }
   }
   
@@ -65,7 +61,7 @@ public:
       stack[current] = defaul;
       return temp;
     } else {
-      error("Stack is empty. Cannot remove elements.\n");
+      std::underflow_error("Stack is empty. Cannot remove elements.\n");
       return defaul;
     }
   }
@@ -81,17 +77,13 @@ public:
   bool isFull() {
     return current == _size;
   }
-private:
-  inline void error(const char* s) {
-    throw std::runtime_error(s);
-  }
 };
 
 int main(int, char**) {
   using namespace std;
   
   struct Stack<char, 3, 0> s;
-  struct Queque<char, 3, 0> q;
+  struct Queue<char, 3, 0> q;
   
   s.in('a');
   s.in('b');
