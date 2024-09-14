@@ -16,7 +16,8 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
-    - run: npm ci
+    - name: Install dependencies
+      run: npm install
     - name: Run Prettier
       run: npx prettier --write .
     - name: Commit changes
