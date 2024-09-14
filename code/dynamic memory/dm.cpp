@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <cstdlib>
 
 template <typename T>
 struct Mstruc {
@@ -19,6 +20,10 @@ int main(void) {
     int* a = new int(8008135);
     // To access pointer use "a";
     // To access value use "*a".
+    
+    int* m = (int*)malloc(sizeof(int));
+    // This is a better way.
+    // You access the same way as the new
 
     std::cout <<  "a = " <<  a << '\n'
               << "*a = " << *a << '\n';
@@ -29,5 +34,6 @@ int main(void) {
 
     // Clear the memory used.
     delete a, b, c;
+    free(m);
     return 0;
 }
