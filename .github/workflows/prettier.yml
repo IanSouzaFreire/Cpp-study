@@ -12,6 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.PAT }}
+        fetch-depth: 0
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
@@ -25,3 +28,5 @@ jobs:
       with:
         commit_message: Apply prettier formatting
         branch: ${{ github.head_ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
