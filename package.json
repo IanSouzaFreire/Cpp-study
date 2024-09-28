@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "beautifier-prettier": "^0.1.2",
-    "prettier": "^3.3.3",
-    "@unibeautify/cli": "^0.2.1",
+    "@unibeautify/beautifier-prettier": "^0.9.0",
+    "@unibeautify/cli": "^0.5.1",
+    "prettier": "^1.19.1",
     "unibeautify": "^0.17.1"
   },
   "scripts": {
