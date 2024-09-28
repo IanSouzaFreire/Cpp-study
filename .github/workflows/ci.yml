@@ -19,10 +19,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # Specify the Node.js version
+          node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          set -e
+          npm install
 
       - name: Run Unibeautify
         run: npm run beautify
