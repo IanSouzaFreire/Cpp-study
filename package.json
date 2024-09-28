@@ -1,13 +1,11 @@
 {
-  "name": "your-project-name",
-  "version": "1.0.0",
-  "engines": {
-    "node": ">=20.0.0"
+  "devDependencies": {
+    "beautifier-prettier": "^0.1.2",
+    "prettier": "^3.3.3",
+    "@unibeautify/cli": "^0.2.1",
+    "unibeautify": "^0.17.1"
   },
   "scripts": {
-    "format": "prettier --write ."
-  },
-  "devDependencies": {
-    "prettier": "^3.0.0"
+    "beautify": "unibeautify"
   }
 }
