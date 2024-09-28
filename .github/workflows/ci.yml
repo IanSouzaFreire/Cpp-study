@@ -26,5 +26,8 @@ jobs:
           set -e
           npm install
 
+      - name: Make Unibeautify executable
+        run: chmod +x node_modules/.bin/unibeautify
+
       - name: Run Unibeautify
         run: npm run beautify
