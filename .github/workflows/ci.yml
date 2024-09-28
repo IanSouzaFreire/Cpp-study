@@ -30,4 +30,7 @@ jobs:
         run: chmod +x node_modules/.bin/unibeautify
 
       - name: Run Unibeautify
-        run: npm run beautify
+        run: |
+          npx unibeautify --inplace --file-path '**/*.{cpp,h,hpp,css,html}' --language C++
+          npx unibeautify --inplace --file-path '**/*.css' --language CSS
+          npx unibeautify --inplace --file-path '**/*.html' --language HTML
