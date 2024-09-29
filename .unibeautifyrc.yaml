@@ -1,6 +1,6 @@
 C++:
   indent_char: " "
-  indent_size: 4
+  indent_size: 2
   max_line_length: 100
   space_before_function_paren: true
   space_after_function_paren: true
@@ -13,12 +13,12 @@ C++:
   space_before_operator: true
   space_after_operator: true
   use_tabs: false
-  align_assignments: true
-  align_parameters: true
+  align_assignments: false
+  align_parameters: false
   sort_imports: true
   include_guard: true
   brace_style: "stroustrup"
-  allow_single_line_blocks: false
+  allow_single_line_blocks: true
 CSS:
   indent_char: " "
   indent_size: 2
