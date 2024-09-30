@@ -17,7 +17,7 @@ C++:
   align_parameters: false
   sort_imports: true
   include_guard: true
-  brace_style: "stroustrup"
+  brace_style: "allman"
   allow_single_line_blocks: true
 CSS:
   indent_char: " "
